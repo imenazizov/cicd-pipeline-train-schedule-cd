@@ -9,6 +9,9 @@ pipeline {
             }
         }
         stage('staging') {
+            when {
+              branch 'master'
+            }
             steps {
              sshPublisher(
                publishers: [
@@ -21,7 +24,7 @@ pipeline {
                transfers: [
                   sshTransfer(
                       excludes: '',
-                      execCommand: 'cd /tmp; systemctl stop train-schedule; rm -rf  /opt/train-schedule/* && unzip trainScheduler.zip -d /opt/train-schedule && systemctl start train-scheduler',
+                      execCommand: 'sudo systemctl stop train-schedule; rm -rf  /opt/train-schedule/* && unzip /tmp/trainSchedule.zip -d /opt/train-schedule && sudo systemctl start train-scheduler',
                       execTimeout: 120000,
                       flatten: false,
                       makeEmptyDirs: false,
@@ -29,7 +32,7 @@ pipeline {
                       patternSeparator: '[, ]+',
                       remoteDirectory: '/tmp',
                       remoteDirectorySDF: false,
-                      removePrefix: 'dist',
+                      removePrefix: 'dist/',
                       sourceFiles: 'dist/trainScheduler.zip'
                   )
                ],
@@ -42,6 +45,9 @@ pipeline {
           }
         }
         stage('production') {
+            when {
+              branch 'master'
+            }
             steps {
               input "Good to deploy to production?"
                 milestone(1)
@@ -54,7 +60,7 @@ pipeline {
                                              keyPath: '',
                                              username: 'deploy'],
                             transfers: [sshTransfer(excludes: '',
-                                                    execCommand: 'cd /tmp; systemctl stop train-schedule; rm -rf  /opt/train-schedule/* && unzip trainScheduler.zip -d /opt/train-schedule && systemctl start train-scheduler',
+                                                    execCommand: 'sudo systemctl stop train-schedule; rm -rf  /opt/train-schedule/* && /tmp/unzip trainSchedule.zip -d /opt/train-schedule && sudo systemctl start train-scheduler',
                                                     execTimeout: 120000,
                                                     flatten: false,
                                                     makeEmptyDirs: false,
@@ -62,7 +68,7 @@ pipeline {
                                                     patternSeparator: '[, ]+',
                                                     remoteDirectory: '/tmp',
                                                     remoteDirectorySDF: false,
-                                                    removePrefix: 'dist',
+                                                    removePrefix: 'dist/',
                                                     sourceFiles: 'dist/trainScheduler.zip'
                                                    )
                                        ],
