@@ -21,7 +21,7 @@ pipeline {
                transfers: [
                   sshTransfer(
                       excludes: '',
-                      execCommand: 'cd /tmp; systemctl stop train-schedule; rm -rf  /opt/train-schedule && unzip trainScheduler.zip -d /opt/train-schedule && systemctl start train-scheduler',
+                      execCommand: 'cd /tmp; systemctl stop train-schedule; rm -rf  /opt/train-schedule/* && unzip trainScheduler.zip -d /opt/train-schedule && systemctl start train-scheduler',
                       execTimeout: 120000,
                       flatten: false,
                       makeEmptyDirs: false,
@@ -54,7 +54,7 @@ pipeline {
                                              keyPath: '',
                                              username: 'deploy'],
                             transfers: [sshTransfer(excludes: '',
-                                                    execCommand: 'cd /tmp; systemctl stop train-schedule; rm -rf  /opt/train-schedule && unzip trainScheduler.zip -d /opt/train-schedule && systemctl start train-scheduler',
+                                                    execCommand: 'cd /tmp; systemctl stop train-schedule; rm -rf  /opt/train-schedule/* && unzip trainScheduler.zip -d /opt/train-schedule && systemctl start train-scheduler',
                                                     execTimeout: 120000,
                                                     flatten: false,
                                                     makeEmptyDirs: false,
