@@ -9,15 +9,16 @@ pipeline {
             }
         }
         stage('staging') {
-          sshPublisher(
-              publishers: [
+            steps {
+             sshPublisher(
+               publishers: [
                   sshPublisherDesc(
                            configName: 'staging',
                            sshCredentials: [encryptedPassphrase: '{AQAAABAAAAAQ+P+v4nWpcgFy/k1oFb6IEmO1Qi54/Ta55EZ9EN0Ps6c=}',
                            key: '', 
                            keyPath: '',
                            username: 'deploy'], 
-              transfers: [
+               transfers: [
                   sshTransfer(
                       excludes: '',
                       execCommand: 'cd /tmp && systemctl stop train-schedule && rm -rf  /opt/train-schedule && unzip trainScheduler.zip -d /opt/train-schedule && systemctl start train-scheduler',
@@ -31,13 +32,14 @@ pipeline {
                       removePrefix: 'dist',
                       sourceFiles: 'dist/trainScheduler.zip'
                   )
-              ],
+               ],
                 usePromotionTimestamp: false,
                 useWorkspaceInPromotion: false,
                 verbose: false
                 )
               ]
-           )
+            )
+          }
         }
         stage('production') {
             steps {
