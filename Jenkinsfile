@@ -14,7 +14,7 @@ pipeline {
                publishers: [
                   sshPublisherDesc(
                            configName: 'staging',
-                           sshCredentials: [encryptedPassphrase: '{AQAAABAAAAAQ+P+v4nWpcgFy/k1oFb6IEmO1Qi54/Ta55EZ9EN0Ps6c=}',
+                           sshCredentials: [encryptedPassphrase: '{AQAAABAAAAAQj2YFxuQgVCm1xOHC/ip8v08RjY8J+2Wm3EoSRfSmvqc=}',
                            key: '', 
                            keyPath: '',
                            username: 'deploy'], 
