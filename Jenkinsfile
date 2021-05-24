@@ -33,7 +33,7 @@ pipeline {
                       remoteDirectory: '/tmp',
                       remoteDirectorySDF: false,
                       removePrefix: 'dist/',
-                      sourceFiles: 'dist/trainScheduler.zip'
+                      sourceFiles: 'dist/trainSchedule.zip'
                   )
                ],
                 usePromotionTimestamp: false,
@@ -69,7 +69,7 @@ pipeline {
                                                     remoteDirectory: '/tmp',
                                                     remoteDirectorySDF: false,
                                                     removePrefix: 'dist/',
-                                                    sourceFiles: 'dist/trainScheduler.zip'
+                                                    sourceFiles: 'dist/trainSchedule.zip'
                                                    )
                                        ],
                             usePromotionTimestamp: false,
